@@ -193,9 +193,9 @@ if [ ${stage} -le 3 ]; then
     echo "stage 3: LM Preparation"
     lmdatadir=data/local/lm_train_de
     mkdir -p ${lmdatadir}
-    text2token.py -s 1 -n 1 data/${train_set}_trim/text | cut -f 2- -d " " | perl -pe 's/\n/ <eos> /g' \
+    text2token.py -s 1 -n 1 data/${train_set}_trim/text | cut -f 2- -d " " | perl -pe 's/\n/ <eos> \n/g' \
         > ${lmdatadir}/train.txt
-    text2token.py -s 1 -n 1 data/${train_dev}_trim/text | cut -f 2- -d " " | perl -pe 's/\n/ <eos> /g' \
+    text2token.py -s 1 -n 1 data/${train_dev}_trim/text | cut -f 2- -d " " | perl -pe 's/\n/ <eos> \n/g' \
         > ${lmdatadir}/valid.txt
     # use only 1 gpu
     if [ ${ngpu} -gt 1 ]; then
