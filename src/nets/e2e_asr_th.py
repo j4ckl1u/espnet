@@ -1630,7 +1630,6 @@ class Decoder(torch.nn.Module):
     :param ndarray labeldist: distribution of label smoothing
     :param float lsm_weight: label smoothing weight
     """
-
     def __init__(self, eprojs, odim, dlayers, dunits, sos, eos, att, verbose=0,
                  char_list=None, labeldist=None, lsm_weight=0.):
         super(Decoder, self).__init__()
@@ -1751,7 +1750,8 @@ class Decoder(torch.nn.Module):
             loss_reg = - torch.sum((F.log_softmax(y_all, dim=1) * self.vlabeldist).view(-1), dim=0) / len(ys_in)
             self.loss = (1. - self.lsm_weight) * self.loss + self.lsm_weight * loss_reg
 
-        return self.loss, acc
+        z_all = z_all.view(batch, olength, -1)
+        return self.loss, acc, z_all
 
     def recognize_beam(self, h, lpz, recog_args, char_list, rnnlm=None):
         '''beam search implementation
