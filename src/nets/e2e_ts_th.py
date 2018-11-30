@@ -72,12 +72,22 @@ class LAST_Loss(torch.nn.Module):
         :rtype: torch.Tensor
         '''
         self.loss = None
+        alpha = self.mtlalpha
         loss_ctc, loss_att, acc, loss_att_trg, acc_trg = self.predictor(xs_pad, ilens, cs_pad, clens, ys_pad)
-        self.loss = self.mtlalpha * loss_ctc + (1 - self.mtlalpha) * loss_att + loss_att_trg
-        loss_att_data = float(loss_att)
+        if alpha == 0:
+            self.loss = loss_att + loss_att_trg
+            loss_att_data = float(loss_att)
+            loss_ctc_data = None
+        elif alpha == 1:
+            self.loss = loss_ctc + loss_att_trg
+            loss_att_data = None
+            loss_ctc_data = float(loss_ctc)
+        else:
+            self.loss = alpha * loss_ctc + (1 - alpha) * loss_att + loss_att_trg
+            loss_att_data = float(loss_att)
+            loss_ctc_data = float(loss_ctc)
+       
         loss_att_trg_data = float(loss_att_trg)
-        loss_ctc_data = float(loss_ctc)
-
         loss_data = float(self.loss)
         if loss_data < CTC_LOSS_THRESHOLD and not math.isnan(loss_data):
             self.reporter.report(loss_ctc_data, loss_att_data, loss_att_trg_data, acc, acc_trg, loss_data)

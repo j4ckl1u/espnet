@@ -353,7 +353,7 @@ def train(args):
 
     # Write a log of evaluation statistics for each epoch
     trainer.extend(extensions.LogReport(trigger=(REPORT_INTERVAL, 'iteration')))
-    report_keys = ['epoch', 'iteration', 'main/loss', 'main/loss_ctc', 'main/loss_att', 'mai/loss_att_trg',
+    report_keys = ['epoch', 'iteration', 'main/loss', 'main/loss_ctc', 'main/loss_att', 'main/loss_att_trg',
                    'validation/main/loss', 'validation/main/loss_ctc', 'validation/main/loss_att', 'validation/main/loss_att_trg',
                    'main/acc', 'validation/main/acc', 'elapsed_time']
     if args.opt == 'adadelta':
