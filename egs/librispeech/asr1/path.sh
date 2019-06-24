@@ -13,3 +13,4 @@ source $MAIN_ROOT/tools/venv/bin/activate
 export PATH=$MAIN_ROOT/utils:$MAIN_ROOT/espnet/bin:$PATH
 
 export OMP_NUM_THREADS=1
+export PYTHONPATH=$PYTHONPATH:$MAIN_ROOT/tools/kaldi-io-for-python
