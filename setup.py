@@ -26,7 +26,7 @@ requirements = {
         'inflect>=1.0.0',
         'unidecode>=1.0.22',
         'editdistance==0.5.2'],
-    'setup': ['numpy', 'pytest-runner'],
+    'setup': ['numpy==1.16.4', 'pytest-runner'],
     'test': [
         'pytest>=3.3.0',
         'pytest-pythonpath>=0.7.1',
